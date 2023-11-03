@@ -1,13 +1,27 @@
-import React from 'react';
-import init from './Init'
+import React, { useState, useEffect } from 'react';
+import init from './Init';
 
-export default class WebGL extends React.Component {
+export default function WebGL() {
 
-    componentDidMount() {
-        init('webgl');
-    }
+    useEffect(() => {
+        const reset = init('webgl');
+        return () => reset();
+    }, [])
 
-    render() {
-        return <canvas id="webgl" width="400" height="400" style={{ border: "1px solid black" }} />
-    }
+    return (
+        <div>
+            <canvas id="webgl" width="400" height="400" style={{ border: '1px solid black'}}></canvas>
+        </div>
+    );
 }
+
+// export default class WebGL extends React.Component {
+
+//     componentDidMount(){
+//         init('webgl');
+//     }
+
+//     render(){
+//         return <canvas id="webgl" width="400" height="400" style={{ border: '1px solid black'}}></canvas>
+//     }
+// }

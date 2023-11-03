@@ -1,11 +1,6 @@
 import GLC from '../GLCommander';
-
-let r = 0;
-const render = () => {
-    GLC.clear(r, 0.0, 0.0, 1.0);
-    r = r + 0.001;
-    window.requestAnimationFrame(render);
-};
+import ModelRenderer from '../Render/ModelRenderer';
+import ModelType from '../Models/ModelType';
 
 export default (id) => {
     const canvas = document.querySelector(`#${id}`);
@@ -21,5 +16,22 @@ export default (id) => {
     }
 
     GLC.init(gl);
-    window.requestAnimationFrame(render);
+
+    const vertices = [
+        0.0, 0.5, 0.0,
+        -0.5, -0.5, 0.0,
+        0.5, -0.5, 0.0
+    ];
+
+    const indices = [0,1,2];
+
+    const modelRender = new ModelRenderer();
+    modelRender.registerNewModel(new ModelType(vertices, indices), 'triangle');
+    modelRender.addInstance('instance1', 'triangle');
+    GLC.clear(1.0, 1.0, 1.0, 1.0);
+    modelRender.render();
+
+    const reset = require('gl-reset')(gl);
+
+    return reset;
 }
