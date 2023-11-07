@@ -3,7 +3,6 @@ import VertexSource from './vertex';
 import FragmentSource from './fragment';
 import Locations from './locations';
 
-
 export default class ModelShader {
     constructor(){
         const vertexShader = GLC.createVertexShader();
@@ -20,6 +19,7 @@ export default class ModelShader {
         GLC.linkProgram(program);
 
         this.positionAttribute = GLC.getAttribLocation(program, Locations.POSITION);
+        this.transformationMatrix = GLC.getUniformLocation(program, 'transformationMatrix');
         this.program = program;
     }
 
@@ -30,5 +30,9 @@ export default class ModelShader {
     enablePosition = () => {
         GLC.enableVertexAttribArray(this.positionAttribute);
         GLC.pointToAttribute(this.positionAttribute, 3);
+    }
+
+    enableTransformationMatrix = (matrix) => {
+        GLC.uploadMatrix4fv(this.transformationMatrix, matrix);
     }
 }

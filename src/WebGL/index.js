@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import init from './Init';
 
 export default function WebGL() {
 
     useEffect(() => {
-        const reset = init('webgl');
-        return () => reset();
+        init('webgl');
     }, [])
 
     return (
