@@ -5,6 +5,8 @@ import ModelInstance from '../Models/ModelInstance';
 import Cube from './cube';
 import Light from '../LightSource';
 import Material from '../Materials/material';
+import Camera from '../Camera';
+import MouseEvent from '../EventHandlers/mouse';
 
 export default (id) => {
     const canvas = document.querySelector(`#${id}`);
@@ -20,6 +22,7 @@ export default (id) => {
     }
 
     GLC.init(gl);
+    MouseEvent.init();
 
     const vertices = Cube.vertices;
     const indices = Cube.indices;
@@ -28,6 +31,7 @@ export default (id) => {
 
     const modelRender = new ModelRenderer();
     const light = new Light(100, 100, -100, 1.0, 1.0, 1.0, 0.4);
+
     const material = new Material();
     material.addDiffuse(require('../resources/testimage.png'));
 
@@ -36,13 +40,15 @@ export default (id) => {
 
     modelRender.registerNewModel(modelType, 'cube');
 
+    const camera = new Camera();
+
     const instance = new ModelInstance(0, 0, 0, 0, 0, 0, 0.5);
     modelRender.addInstance(instance, 'cube');
 
     const render = () => {
         GLC.clear(1.0, 1.0, 1.0, 1.0);
         instance.updateRotation(1, 1, 1);
-        modelRender.render(light);
+        modelRender.render(light, camera);
         window.requestAnimationFrame(render);
     }
 
