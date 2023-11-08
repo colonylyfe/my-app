@@ -41,10 +41,13 @@ class GLCommander {
     enableVertexAttribArray = (attribute) => this.gl.enableVertexAttribArray(attribute);
     pointToAttribute = (data, dimensions) => this.gl.vertexAttribPointer(data, dimensions, this.gl.FLOAT, false, 0, 0);
 
-    drawTriangles = (noOfIndices) => this.gl.drawElements(this.gl.TRIANGLES, noOfIndices, this.gl.UNSIGNED_SHORT, 0);
+    drawTriangles = (noOfIndices) => this.gl.drawElements(this.gl.TRIANGLES, noOfIndices, this.gl.UNSIGNED_SHORT, 0); 
 
     uploadMatrix4fv = (location, matrix) => this.gl.uniformMatrix4fv(location, false, matrix);
     getUniformLocation = (program, uniform) => this.gl.getUniformLocation(program, uniform); 
+
+    uploadVec3f = (location, vec3) => this.gl.uniform3fv(location, vec3);
+    uploadFloat = (location, value) => this.gl.uniform1f(location, value); 
 }
 
 const GLC = new GLCommander();
